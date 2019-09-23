@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================== 
+1. appender 설정 예제
+ - https://hashmap27.tistory.com/8
+ - https://sonegy.wordpress.com/category/logback/
+=========================================== -->
+<!-- <configuration debug="true" scan="true" scanPeriod="60 seconds"> -->
+<configuration scan="true" scanPeriod="60 seconds">
+
+    <!-- 공통 환경변수 설정 -->
+    <property name="APP_NAME" value="LogPlanet-Agent-Logging"/>
+    <property name="LOG_FILENAME" value="로그 파일 명" />
+    <property name="LOG_PATTERN_COMMON" value="[%d : %t] %-5level %logger{0} : %msg %n" />
+    <property name="LOG_PATTERN_OUTPUT" value="%msg %n" />
+    <property name="LOG_CHARSET" value="UTF-8" />
+
+    <!--online-configuration-START -->
+    <contextName>${APP_NAME}</contextName>
+    <jmxConfigurator />
+    
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN_COMMON}</pattern>
+            <charset>${LOG_CHARSET}</charset>
+        </encoder>
+    </appender>
+    
+    <appender name="output-log" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN_OUTPUT}</pattern>
+        </encoder>
+    </appender>
+    
+    <!-- for Common Class
+    <logger name="io.netty" level="warn">
+    </logger>
+    -->
+     
+    <!-- for Agent Class -->
+    <logger name="com.obzen.agent" level="info" additivity="false">
+        <appender-ref ref="console" />
+    </logger>
+    
+    <!-- for Test Class -->
+    <logger name="test.obzen" level="info" additivity="false">
+        <appender-ref ref="console" />
+    </logger>
+    
+    <logger name="test.obzen.agent.logging.VertxLoggingTest" level="info" additivity="false">
+        <appender-ref ref="output-log" />
+    </logger>
+    
+    <root level="warn">
+        <appender-ref ref="console" />
+    </root>
+
+</configuration>
