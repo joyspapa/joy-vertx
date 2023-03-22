@@ -9,16 +9,20 @@ jar {
     }
 }
 
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
 repositories {
     mavenCentral()
 }
 
 allprojects {
-    compileJava {
-            sourceCompatibility = 1.8
-            targetCompatibility = 1.8
-            options.encoding = 'UTF-8'
-        }
+    // modified by mark (이거 안 통함, 2023-03-22)
+    //compileJava {
+    //        sourceCompatibility = 1.8
+    //        targetCompatibility = 1.8
+    //        options.encoding = 'UTF-8'
+    //    }
         
     ext {
         vertxVersion = '3.5.1'
@@ -36,11 +40,11 @@ dependencies {
     //=========================================
     // Vert.x Web
     //=========================================
-    compile "io.vertx:vertx-core:$vertxVersion"
-    compile "io.vertx:vertx-web:$vertxVersion"
-    compile "io.vertx:vertx-web-client:$vertxVersion"
-    compile "io.vertx:vertx-hazelcast:$vertxVersion"
-    compile "io.vertx:vertx-rx-java:$vertxVersion"
+    implementation "io.vertx:vertx-core:$vertxVersion"
+    implementation "io.vertx:vertx-web:$vertxVersion"
+    implementation "io.vertx:vertx-web-client:$vertxVersion"
+    implementation "io.vertx:vertx-hazelcast:$vertxVersion"
+    implementation "io.vertx:vertx-rx-java:$vertxVersion"
     
     //=========================================
     // Vert.x Unit
@@ -50,22 +54,22 @@ dependencies {
     //=========================================
     // logback
     //=========================================
-    compile "io.netty:netty-tcnative-boringssl-static:2.0.20.Final"
+    implementation "io.netty:netty-tcnative-boringssl-static:2.0.20.Final"
     
     //=========================================
     // logback
     //=========================================
-    compile "ch.qos.logback:logback-classic:$logbackVersion"
+    implementation "ch.qos.logback:logback-classic:$logbackVersion"
     
     //=========================================
     // Zookeeper
     //=========================================
-    compile "org.apache.zookeeper:zookeeper:$zookeeperVersion"
+    implementation "org.apache.zookeeper:zookeeper:$zookeeperVersion"
     
     //=========================================
     // Kafka
     //=========================================
-    compile("org.apache.kafka:kafka_$kafkaScalaVersion:$kafkaVersion") {
+    implementation("org.apache.kafka:kafka_$kafkaScalaVersion:$kafkaVersion") {
       exclude module: 'jopt-simple'
       exclude module: 'junit'
       exclude module: 'netty'
@@ -75,12 +79,12 @@ dependencies {
       exclude module: 'snappy-java'
       exclude module: 'zookeeper'
     }
-    compile "org.apache.kafka:kafka-clients:$kafkaClientVersion"
+    implementation "org.apache.kafka:kafka-clients:$kafkaClientVersion"
     
     //=========================================
     // junit for Testing
     //=========================================    
-    testCompile group: 'junit', name: 'junit', version: '4.+'
+    testImplementation group: 'junit', name: 'junit', version: '4.+'
     
     
 }
